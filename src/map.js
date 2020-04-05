@@ -5,14 +5,17 @@ class Map {
   width = window.innerWidth;
   height = window.innerHeight;
 
+  //Creates a new projection with 'geoMercator' which is the world map
   projection = d3
     .geoMercator()
     .scale(250)
     .center([-30, 0])
     .translate([this.width / 2, (3 * this.height) / 4]);
 
+  // Create geographic path generator
   path = d3.geoPath(this.projection);
 
+  //Creates a default zoom that can be applied to themap with '.call'
   zoom = d3
     .zoom()
     .scaleExtent([0.25, 100])
@@ -22,14 +25,15 @@ class Map {
     ])
     .on("zoom", this.zoomed.bind(this));
 
-  zoomed() {
-    this.g
-      // .selectAll('path') // To prevent stroke width from scaling
-      .attr("transform", d3.event.transform);
-    this.setScaling(d3.event.transform.k);
-    this.g.selectAll("circle").attr("r", (d) => this.toSize(d.confirmed));
-  }
+  // zoomed() {
+  //   this.g
+  //     // .selectAll('path') // To prevent stroke width from scaling
+  //     .attr("transform", d3.event.transform);
+  //   this.setScaling(d3.event.transform.k);
+  //   this.g.selectAll("circle").attr("r", (d) => this.toSize(d.confirmed));
+  // }
 
+  // Create D3 SVG Element and append the map to the SVG
   svg = d3
     .select(".visual")
     .append("svg")
@@ -37,8 +41,8 @@ class Map {
     .attr("height", this.height)
     .call(this.zoom);
 
+  // g SVG element is used to group other SVG elements together
   g = this.svg.append("g");
-
   countries = this.g.append("g").classed("countries", true);
   states = this.g.append("g").classed("states", true);
 
@@ -53,6 +57,7 @@ class Map {
       geojson = topojson.feature(topology, topology.objects.countries);
       object = this.countries;
     }
+    console.log(geojson);
     const pathObj = object.selectAll("path").data(geojson.features);
     pathObj
       .enter()  
