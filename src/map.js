@@ -25,13 +25,12 @@ class Map {
     ])
     .on("zoom", this.zoomed.bind(this));
 
-  // zoomed() {
-  //   this.g
-  //     // .selectAll('path') // To prevent stroke width from scaling
-  //     .attr("transform", d3.event.transform);
-  //   this.setScaling(d3.event.transform.k);
-  //   this.g.selectAll("circle").attr("r", (d) => this.toSize(d.confirmed));
-  // }
+  zoomed() {
+    this.g
+      // .selectAll('path') // To prevent stroke width from scaling
+      .attr("transform", d3.event.transform);
+    this.g.selectAll("circle").attr("r", (d) => this.toSize(d.confirmed));
+  }
 
   // Create D3 SVG Element and append the map to the SVG
   svg = d3
@@ -46,7 +45,8 @@ class Map {
   countries = this.g.append("g").classed("countries", true);
   states = this.g.append("g").classed("states", true);
 
-  createMapWithTopology(topology) {
+  //Create map with world and US states topology
+  createMapWithTopology = (topology) => {
     let geojson;
     let object;
 
@@ -57,8 +57,9 @@ class Map {
       geojson = topojson.feature(topology, topology.objects.countries);
       object = this.countries;
     }
-    console.log(geojson);
+    
     const pathObj = object.selectAll("path").data(geojson.features);
+
     pathObj
       .enter()  
       .append("path")
@@ -67,7 +68,8 @@ class Map {
       .transition()
       .ease(d3.easeCubicIn)
       .duration(1000)
-      .style("opacity", 1);
+      .style("opacity", 0.8)
+      .attr('fill', '#F5F5F5')
   }
 }
 

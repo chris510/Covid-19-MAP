@@ -8,4 +8,6 @@ const fetchTopology = Promise.all([
   d3.json(topologyStatesLink),
 ]);
 
-export { fetchTopology };
+export { 
+  fetchTopology 
+};
