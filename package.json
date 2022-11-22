@@ -15,7 +15,7 @@
     "save-dev": "0.0.1-security",
     "topojson": "^3.0.2",
     "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
